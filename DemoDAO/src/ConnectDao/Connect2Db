@@ -1,0 +1,44 @@
+
+import java.sql
+
+/**
+ *
+ * @author alsorc
+ */
+public class Connect2Db {
+
+    //Instancia de la clase
+    private static Connect2Db connectInstance;
+    //Variable para realizar la conexión
+    private Connection connection;
+    //Dirección y nombre de la bd conectarnos
+    private final String URL = "jdbc:sqlite:ejemplo.db";
+    //Nombre de usuario autorizado para conectarse
+    private final String USER = "user";
+    //Contraseña para conectarnos
+    private final String PASSWORD = "password";
+    
+    private Connect2Db() {
+        try {
+            connection = DriverManager.getConnection(URL);
+            System.out.println("Conectado!");
+        } catch (SQLException ex) {
+            Logger.getLogger(Connect2Db.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            System.out.println("OK ");
+        }
+    }
+    
+    //Implementación del patrón singleton para acceder a una instancia única de la clase
+    public static Connect2Db getInstance(){
+        if (connectInstance == null ){
+            connectInstance = new Connect2Db();
+        }
+        return connectInstance;
+    }
+       
+    public Connection getConnection(){
+        return connection;
+    }
+
+}
